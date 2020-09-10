@@ -54,7 +54,11 @@ window.addEventListener("DOMContentLoaded", (event) => {
   });
 
 clickTargets.addEventListener("click", (event) => {
-    game.playInColumn();
+  let targetId = event.target.id;
+    if( targetId.includes('column-')) {
+      let numVal = Number.parseInt(targetId[targetId.length - 1])
+    }
+  game.playInColumn(numVal);
     updateUI();
   });
 
