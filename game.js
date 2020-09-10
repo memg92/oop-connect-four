@@ -3,18 +3,29 @@ export class Game {
     this.p1name = p1name;
     this.p2name = p2name;
     this.currentPlayer = 1;
+    this.columns = [
+      new Column(),
+      new Column(),
+      new Column(),
+      new Column(),
+      new Column(),
+      new Column(),
+      new Column(),
+    ];
   }
 
   getName() {
     return `${this.p1name} vs. ${this.p2name}`;
   }
 
-  playInColumn() {
-        if (this.currentPlayer === 1) {
-          this.currentPlayer = 2;
-        } else {
-          this.currentPlayer = 1;
-        }
+  playInColumn(columnIndex) {
+    this.columns[columnIndex].getTokensAt(rowIndex);
+
+    if (this.currentPlayer === 1) {
+      this.currentPlayer = 2;
+    } else {
+      this.currentPlayer = 1;
+    }
   }
 }
 
