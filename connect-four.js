@@ -1,46 +1,47 @@
 import { Game } from "./game.js";
 import { Column } from "./column.js";
 let game = undefined;
-let clickTargets = document.getElementById("click-targets");
 
 function updateUI() {
-  let boardHolder = document.getElementById("board-holder");
-  let gameName = document.getElementById("game-name");
+  const boardHolder = document.getElementById("board-holder");
+  const gameName = document.getElementById("game-name");
 
   if (game === undefined) {
     boardHolder.classList.add("is-invisible");
   } else {
     boardHolder.classList.remove("is-invisible");
     gameName.innerHTML = game.getName();
-  }
 
-  let player = game.currentPlayer;
-  if (player === 1) {
-    clickTargets.classList.add("black");
-    clickTargets.classList.remove("red");
-  } else {
-    clickTargets.classList.add("red");
-    clickTargets.classList.remove("black");
-  }
+    for (let rowIndex = 0; rowIndex <= 5; rowIndex++) {
+      for (let columnIndex = 0; columnIndex <= 6; columnIndex++) {
+        const square = document.querySelector(
+          `#square-${rowIndex}-${columnIndex}`
+        );
+        square.innderHTML = "";
 
-  let square = "";
-  //row index
-  for (let rowIndex = 0; rowIndex <= 5; rowIndex++) {
-    //column index
-    for (let columnIndex = 0; columnIndex <= 6; columnIndex++) {
-      square = document.getElementById(`square-${rowIndex}-${columnIndex}`);
+        const playerNumber = game.getTokenAt(rowIndex, columnIndex);
+        if (playerNumber === 1) {
+          const token = document.createElement("div");
+          token.classList.add("token");
+          token.classList.add("black");
+          square.appendChild(token);
+        } else if (playerNumber === 2) {
+          const token = document.createElement("div");
+          token.classList.add("token");
+          token.classList.add("red");
+          square.appendChild(token);
+        }
+      }
     }
-  }
-
-  let newPlayer = game.getTokenAt(rowIndex, columnIndex);
-  if (newPlayer === 1) {
-    let div = document.createElement("div");
-    div.classList.add("token black");
-    square.appendChild(div);
-  } else if (newPlayer === 2) {
-    let div = document.createElement("div");
-    div.classList.add("token red");
-    square.appendChild(div);
+    const player = game.currentPlayer;
+    const clickTargets = document.getElementById("click-targets");
+    if (player === 1) {
+      clickTargets.classList.add("black");
+      clickTargets.classList.remove("red");
+    } else {
+      clickTargets.classList.add("red");
+      clickTargets.classList.remove("black");
+    }
   }
 }
 
@@ -48,7 +49,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
   const p1 = document.getElementById("player-1-name");
   const p2 = document.getElementById("player-2-name");
   const newGame = document.getElementById("new-game");
-  newGame.disabled = true;
+  // newGame.disabled = true;
 
   function buttonSwitch() {
     let p1Content = p1.value;
@@ -74,14 +75,18 @@ window.addEventListener("DOMContentLoaded", (event) => {
     updateUI();
   });
 
-  clickTargets.addEventListener("click", (event) => {
-    let targetId = event.target.id;
-    if (targetId.includes("column-")) {
-      let numVal = Number.parseInt(targetId[targetId.length - 1]);
-    }
-    game.playInColumn(numVal);
-    updateUI();
-  });
+  document
+    .getElementById("click-targets")
+    .addEventListener("click", (event) => {
+      const targetId = event.target.id;
+      if (!targetId.startsWith("column-")) return;
+
+      const columnIndex = Number.parseInt(targetId[targetId.length - 1]);
+
+      game.playInColumn(columnIndex);
+      updateUI();
+      console.log(game.columns);
+    });
 
   // console.log(game.currentPlayer);
 });

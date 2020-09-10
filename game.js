@@ -20,12 +20,12 @@ export class Game {
     return `${this.p1name} vs. ${this.p2name}`;
   }
 
-  getTokensAt(rowIndex, columnIndex) {
-    return this.columns[columnIndex].getTokensAt(rowIndex);
+  getTokenAt(rowIndex, columnIndex) {
+    return this.columns[columnIndex].getTokenAt(rowIndex);
   }
 
   playInColumn(columnIndex) {
-    this.columns[columnIndex].getTokensAt(rowIndex);
+    this.columns[columnIndex].add(this.currentPlayer);
 
     if (this.currentPlayer === 1) {
       this.currentPlayer = 2;
