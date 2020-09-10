@@ -1,4 +1,5 @@
 import { Game } from "./game.js";
+import { Column } from "./column.js";
 let game = undefined;
 let clickTargets = document.getElementById("click-targets");
 
@@ -20,6 +21,26 @@ function updateUI() {
   } else {
     clickTargets.classList.add("red");
     clickTargets.classList.remove("black");
+  }
+
+  let square = "";
+  //row index
+  for (let rowIndex = 0; rowIndex <= 5; rowIndex++) {
+    //column index
+    for (let columnIndex = 0; columnIndex <= 6; columnIndex++) {
+      square = document.getElementById(`square-${rowIndex}-${columnIndex}`);
+    }
+  }
+
+  let newPlayer = game.getTokenAt(rowIndex, columnIndex);
+  if (newPlayer === 1) {
+    let div = document.createElement("div");
+    div.classList.add("token black");
+    square.appendChild(div);
+  } else if (newPlayer === 2) {
+    let div = document.createElement("div");
+    div.classList.add("token red");
+    square.appendChild(div);
   }
 }
 
@@ -53,12 +74,12 @@ window.addEventListener("DOMContentLoaded", (event) => {
     updateUI();
   });
 
-clickTargets.addEventListener("click", (event) => {
-  let targetId = event.target.id;
-    if( targetId.includes('column-')) {
-      let numVal = Number.parseInt(targetId[targetId.length - 1])
+  clickTargets.addEventListener("click", (event) => {
+    let targetId = event.target.id;
+    if (targetId.includes("column-")) {
+      let numVal = Number.parseInt(targetId[targetId.length - 1]);
     }
-  game.playInColumn(numVal);
+    game.playInColumn(numVal);
     updateUI();
   });
 

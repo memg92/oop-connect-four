@@ -1,3 +1,5 @@
+import { Column } from "./column.js";
+
 export class Game {
   constructor(p1name, p2name) {
     this.p1name = p1name;
@@ -19,7 +21,7 @@ export class Game {
   }
 
   getTokensAt(rowIndex, columnIndex) {
-    return this.columns[columnIndex].getTokensAt(rowIndex)
+    return this.columns[columnIndex].getTokensAt(rowIndex);
   }
 
   playInColumn(columnIndex) {
