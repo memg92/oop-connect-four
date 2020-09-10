@@ -53,7 +53,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
     updateUI();
   });
 
-  clickTargets.addEventListener("click", (event) => {
+clickTargets.addEventListener("click", (event) => {
     game.playInColumn();
     updateUI();
   });

@@ -10,15 +10,11 @@ export class Game {
   }
 
   playInColumn() {
-    document
-      .getElementById("click-target")
-      .addEventListener("click", (event) => {
-        if ((this.currentPlayer = 1)) {
+        if (this.currentPlayer === 1) {
           this.currentPlayer = 2;
         } else {
           this.currentPlayer = 1;
         }
-      });
   }
 }
 
